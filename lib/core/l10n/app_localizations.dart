@@ -97,6 +97,12 @@ abstract class AppLocalizations {
     Locale('en'),
     Locale('zh'),
   ];
+
+  /// No description provided for @appTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'韓文單字卡'**
+  String get appTitle;
 }
 
 class _AppLocalizationsDelegate

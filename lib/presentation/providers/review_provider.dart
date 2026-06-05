@@ -3,6 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/review_record.dart';
 import 'database_provider.dart';
 
-final dueReviewsProvider = FutureProvider<List<ReviewRecord>>((ref) {
+final dueReviewsProvider = FutureProvider.autoDispose<List<ReviewRecord>>((ref) {
   return ref.watch(reviewRepositoryProvider).getDueRecords(DateTime.now());
 });
