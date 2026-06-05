@@ -45,9 +45,7 @@ class _DeckCard extends StatelessWidget {
         trailing: Chip(label: Text(badge)),
         onTap: () => Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (_) => ModeSelectionScreen(deck: deck),
-          ),
+          MaterialPageRoute(builder: (_) => ModeSelectionScreen(deck: deck)),
         ),
       ),
     );
