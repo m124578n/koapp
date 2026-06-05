@@ -8,4 +8,5 @@ abstract class StatsRepository {
   Future<List<Achievement>> getAchievements();
   Future<void> unlockAchievement(String achievementId);
   Future<Map<DateTime, int>> getDailyReviewCounts(int lastNDays);
+  Future<void> incrementDailyCount(DateTime date);
 }

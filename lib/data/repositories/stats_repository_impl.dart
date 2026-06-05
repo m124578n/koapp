@@ -64,6 +64,8 @@ class StatsRepositoryImpl implements StatsRepository {
 
   AchievementCondition _conditionFromString(String s) {
     switch (s) {
+      case 'first_review':
+        return AchievementCondition.firstReview;
       case 'streak_days':
         return AchievementCondition.streakDays;
       case 'total_reviewed':
@@ -73,7 +75,11 @@ class StatsRepositoryImpl implements StatsRepository {
       case 'created_deck':
         return AchievementCondition.createdDeck;
       default:
-        return AchievementCondition.firstReview;
+        throw ArgumentError('Unknown achievement condition: $s');
     }
   }
+
+  @override
+  Future<void> incrementDailyCount(DateTime date) =>
+      _db.statsDao.incrementDailyCount(date);
 }

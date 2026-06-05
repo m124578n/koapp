@@ -31,7 +31,7 @@ class CardRepositoryImpl implements CardRepository {
 
   @override
   Future<void> updateCard(KoreanCard card) async {
-    await _db.cardDao.updateCardById(CardsCompanion(
+    final affected = await _db.cardDao.updateCardById(CardsCompanion(
       id: Value(card.id),
       deckId: Value(card.deckId),
       korean: Value(card.korean),
@@ -42,6 +42,7 @@ class CardRepositoryImpl implements CardRepository {
       exampleTranslation: Value(card.exampleTranslation),
       createdAt: Value(card.createdAt),
     ));
+    if (affected == 0) throw StateError('Card not found: ${card.id}');
   }
 
   @override

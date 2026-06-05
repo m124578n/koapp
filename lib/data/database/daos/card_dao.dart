@@ -15,7 +15,7 @@ class CardDao extends DatabaseAccessor<AppDatabase> with _$CardDaoMixin {
   Future<void> insertCard(CardsCompanion companion) =>
       into(cards).insertOnConflictUpdate(companion);
 
-  Future<void> updateCardById(CardsCompanion companion) =>
+  Future<int> updateCardById(CardsCompanion companion) =>
       (update(cards)..where((t) => t.id.equals(companion.id.value)))
           .write(companion);
 
