@@ -1,6 +1,6 @@
 {
   "@@locale": "zh",
-  "appTitle": "韓文單字卡",
+  "appTitle": "單字卡",
   "tabStudy": "學習",
   "tabLibrary": "詞庫",
   "tabProgress": "進度",
@@ -21,8 +21,8 @@
   "newDeck": "新增牌組",
   "newCard": "新增卡片",
   "editCard": "編輯卡片",
-  "korean": "韓文",
-  "romanization": "羅馬拼音",
+  "korean": "單字",
+  "romanization": "音標 / 拼音（選填）",
   "meaningZh": "中文意思",
   "meaningEn": "英文意思",
   "exampleSentence": "例句",

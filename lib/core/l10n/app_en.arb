@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appTitle": "Korean Flashcards",
+  "appTitle": "Flashcards",
   "tabStudy": "Study",
   "tabLibrary": "Library",
   "tabProgress": "Progress",
@@ -21,8 +21,8 @@
   "newDeck": "New Deck",
   "newCard": "New Card",
   "editCard": "Edit Card",
-  "korean": "Korean",
-  "romanization": "Romanization",
+  "korean": "Word",
+  "romanization": "Phonetics (optional)",
   "meaningZh": "Chinese Meaning",
   "meaningEn": "English Meaning",
   "exampleSentence": "Example Sentence",

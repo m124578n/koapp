@@ -58,7 +58,7 @@ class _CardEditScreenState extends ConsumerState<CardEditScreen> {
           padding: const EdgeInsets.all(16),
           children: [
             _field(_koreanCtrl, l.korean, required: true),
-            _field(_romanCtrl, l.romanization, required: true),
+            _field(_romanCtrl, l.romanization),
             _field(_zhCtrl, l.meaningZh),
             _field(_enCtrl, l.meaningEn),
             _field(_exCtrl, l.exampleSentence),
