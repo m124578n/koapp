@@ -9,7 +9,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appTitle => '韓文單字卡';
+  String get appTitle => '單字卡';
 
   @override
   String get tabStudy => '學習';
@@ -75,7 +75,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get word => '單字';
 
   @override
-  String get romanization => '羅馬拼音';
+  String get romanization => '音標 / 拼音（選填）';
 
   @override
   String get meaningZh => '中文意思';
@@ -182,4 +182,37 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get meaningRequired => '請輸入至少一個意思';
+
+  @override
+  String get deckLanguage => '牌組語言';
+
+  @override
+  String get ttsAutoPlay => '自動播放讀音';
+
+  @override
+  String get ttsApiKeyLabel => 'Google TTS API Key';
+
+  @override
+  String get ttsApiKeyHint => '輸入 API Key 以使用 Google 雲端語音（選填）';
+
+  @override
+  String get ttsTest => '測試';
+
+  @override
+  String get ttsTestSuccess => '測試成功！正在播放語音';
+
+  @override
+  String get ttsTestInvalidKey => 'API Key 無效，請確認後重試';
+
+  @override
+  String get ttsTestNetworkError => '網路錯誤，請稍後再試';
+
+  @override
+  String get ttsApiKeyInvalidWarning => 'API Key 已失效，已切換至系統語音';
+
+  @override
+  String get ttsSpeakUnsupportedWithKey => '此語言不支援讀音（請試試 Google TTS API Key）';
+
+  @override
+  String get ttsSpeakUnsupportedNoKey => '此語言不支援系統語音';
 }

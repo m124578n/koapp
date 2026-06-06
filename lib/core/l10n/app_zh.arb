@@ -58,5 +58,16 @@
   "achievementDeckDesc": "建立第一個自訂牌組",
   "nextCard": "下一張",
   "deckName": "牌組名稱",
-  "meaningRequired": "請輸入至少一個意思"
+  "meaningRequired": "請輸入至少一個意思",
+  "deckLanguage": "牌組語言",
+  "ttsAutoPlay": "自動播放讀音",
+  "ttsApiKeyLabel": "Google TTS API Key",
+  "ttsApiKeyHint": "輸入 API Key 以使用 Google 雲端語音（選填）",
+  "ttsTest": "測試",
+  "ttsTestSuccess": "測試成功！正在播放語音",
+  "ttsTestInvalidKey": "API Key 無效，請確認後重試",
+  "ttsTestNetworkError": "網路錯誤，請稍後再試",
+  "ttsApiKeyInvalidWarning": "API Key 已失效，已切換至系統語音",
+  "ttsSpeakUnsupportedWithKey": "此語言不支援讀音（請試試 Google TTS API Key）",
+  "ttsSpeakUnsupportedNoKey": "此語言不支援系統語音"
 }

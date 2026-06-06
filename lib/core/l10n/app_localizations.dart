@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In zh, this message translates to:
-  /// **'韓文單字卡'**
+  /// **'單字卡'**
   String get appTitle;
 
   /// No description provided for @tabStudy.
@@ -233,7 +233,7 @@ abstract class AppLocalizations {
   /// No description provided for @romanization.
   ///
   /// In zh, this message translates to:
-  /// **'羅馬拼音'**
+  /// **'音標 / 拼音（選填）'**
   String get romanization;
 
   /// No description provided for @meaningZh.
@@ -439,6 +439,39 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'請輸入至少一個意思'**
   String get meaningRequired;
+
+  /// No description provided for @deckLanguage.
+  String get deckLanguage;
+
+  /// No description provided for @ttsAutoPlay.
+  String get ttsAutoPlay;
+
+  /// No description provided for @ttsApiKeyLabel.
+  String get ttsApiKeyLabel;
+
+  /// No description provided for @ttsApiKeyHint.
+  String get ttsApiKeyHint;
+
+  /// No description provided for @ttsTest.
+  String get ttsTest;
+
+  /// No description provided for @ttsTestSuccess.
+  String get ttsTestSuccess;
+
+  /// No description provided for @ttsTestInvalidKey.
+  String get ttsTestInvalidKey;
+
+  /// No description provided for @ttsTestNetworkError.
+  String get ttsTestNetworkError;
+
+  /// No description provided for @ttsApiKeyInvalidWarning.
+  String get ttsApiKeyInvalidWarning;
+
+  /// No description provided for @ttsSpeakUnsupportedWithKey.
+  String get ttsSpeakUnsupportedWithKey;
+
+  /// No description provided for @ttsSpeakUnsupportedNoKey.
+  String get ttsSpeakUnsupportedNoKey;
 }
 
 class _AppLocalizationsDelegate

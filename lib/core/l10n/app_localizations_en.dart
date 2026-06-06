@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Korean Flashcards';
+  String get appTitle => 'Flashcards';
 
   @override
   String get tabStudy => 'Study';
@@ -75,7 +75,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get word => 'Word';
 
   @override
-  String get romanization => 'Romanization';
+  String get romanization => 'Phonetics (optional)';
 
   @override
   String get meaningZh => 'Chinese Meaning';
@@ -182,4 +182,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meaningRequired => 'Please enter at least one meaning';
+
+  @override
+  String get deckLanguage => 'Deck Language';
+
+  @override
+  String get ttsAutoPlay => 'Auto-play Pronunciation';
+
+  @override
+  String get ttsApiKeyLabel => 'Google TTS API Key';
+
+  @override
+  String get ttsApiKeyHint => 'Enter API Key to use Google Cloud TTS (optional)';
+
+  @override
+  String get ttsTest => 'Test';
+
+  @override
+  String get ttsTestSuccess => 'Test successful! Playing audio';
+
+  @override
+  String get ttsTestInvalidKey => 'Invalid API Key, please check and try again';
+
+  @override
+  String get ttsTestNetworkError => 'Network error, please try again later';
+
+  @override
+  String get ttsApiKeyInvalidWarning => 'API Key failed, switched to system TTS';
+
+  @override
+  String get ttsSpeakUnsupportedWithKey => 'Pronunciation not supported for this language (try Google TTS API Key)';
+
+  @override
+  String get ttsSpeakUnsupportedNoKey => 'System TTS not supported for this language';
 }
