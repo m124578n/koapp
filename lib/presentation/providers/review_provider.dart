@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/card.dart';
 import '../../domain/entities/review_record.dart';
 import '../../domain/usecases/calculate_sm2.dart';
+import '../../domain/usecases/evaluate_achievements.dart';
 import 'database_provider.dart';
+import 'deck_provider.dart';
 
 final dueReviewsProvider = FutureProvider.autoDispose<List<ReviewRecord>>((ref) {
   return ref.watch(reviewRepositoryProvider).getDueRecords(DateTime.now());
@@ -103,6 +105,62 @@ class ReviewNotifier extends StateNotifier<AsyncValue<ReviewSession>> {
           sessionCorrect: s.sessionCorrect + 1,
         )));
   }
+
+  Future<void> finalizeSession() async {
+    final session = state.valueOrNull;
+    if (session == null) return;
+
+    final statsRepo = _ref.read(statsRepositoryProvider);
+
+    // Update daily count
+    await _ref.read(appDatabaseProvider).statsDao.incrementDailyCount(DateTime.now());
+
+    // Update streak
+    var stats = await statsRepo.getStats();
+    final today = DateTime.now();
+    final isNewDay = stats.lastStudiedAt == null ||
+        !_sameDay(stats.lastStudiedAt!, today);
+    final wasMissed = stats.lastStudiedAt != null &&
+        today.difference(stats.lastStudiedAt!).inDays > 1;
+
+    if (isNewDay) {
+      final newStreak = wasMissed ? 1 : stats.currentStreak + 1;
+      stats = stats.copyWith(
+        currentStreak: newStreak,
+        longestStreak: newStreak > stats.longestStreak
+            ? newStreak
+            : stats.longestStreak,
+        totalCardsReviewed: stats.totalCardsReviewed + session.cards.length,
+        totalCorrect: stats.totalCorrect + session.sessionCorrect,
+        lastStudiedAt: today,
+      );
+    } else {
+      stats = stats.copyWith(
+        totalCardsReviewed: stats.totalCardsReviewed + session.cards.length,
+        totalCorrect: stats.totalCorrect + session.sessionCorrect,
+      );
+    }
+    await statsRepo.saveStats(stats);
+
+    // Evaluate achievements
+    final achievements = await statsRepo.getAchievements();
+    final customDecks = await _ref.read(customDecksCountProvider.future);
+    final updated = evaluateAchievements(
+      achievements: achievements,
+      stats: stats,
+      sessionCorrect: session.sessionCorrect,
+      sessionTotal: session.cards.length,
+      customDecksCount: customDecks,
+    );
+    for (final a in updated) {
+      if (a.unlocked && !achievements.any((old) => old.id == a.id && old.unlocked)) {
+        await statsRepo.unlockAchievement(a.id);
+      }
+    }
+  }
+
+  bool _sameDay(DateTime a, DateTime b) =>
+      a.year == b.year && a.month == b.month && a.day == b.day;
 }
 
 final reviewNotifierProvider = StateNotifierProvider.autoDispose

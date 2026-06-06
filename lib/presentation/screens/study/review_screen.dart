@@ -30,6 +30,7 @@ class ReviewScreen extends ConsumerWidget {
             return _SessionComplete(
               total: session.cards.length,
               correct: session.sessionCorrect,
+              deckId: deck.id,
             );
           }
 
@@ -232,16 +233,37 @@ class _RatingButtons extends ConsumerWidget {
   }
 }
 
-class _SessionComplete extends StatelessWidget {
+class _SessionComplete extends ConsumerStatefulWidget {
   final int total;
   final int correct;
+  final String deckId;
 
-  const _SessionComplete({required this.total, required this.correct});
+  const _SessionComplete({
+    required this.total,
+    required this.correct,
+    required this.deckId,
+  });
+
+  @override
+  ConsumerState<_SessionComplete> createState() => _SessionCompleteState();
+}
+
+class _SessionCompleteState extends ConsumerState<_SessionComplete> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(reviewNotifierProvider(widget.deckId).notifier)
+          .finalizeSession();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    final accuracy = total > 0 ? (correct / total * 100).round() : 0;
+    final accuracy =
+        widget.total > 0 ? (widget.correct / widget.total * 100).round() : 0;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -251,7 +273,7 @@ class _SessionComplete extends StatelessWidget {
           Text(l.sessionComplete,
               style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: 8),
-          Text(l.cardsReviewed(total)),
+          Text(l.cardsReviewed(widget.total)),
           Text('$accuracy% ${l.accuracy}'),
           const SizedBox(height: 32),
           ElevatedButton(
