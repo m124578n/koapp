@@ -115,8 +115,14 @@ final String language; // BCP-47，例如 'ko-KR'、'ja-JP'
 ```
 [🔑] Google TTS API Key
      預設使用裝置內建語音。輸入 Google Cloud TTS API key 可獲得更自然的朗讀效果。
-     [輸入框（obscureText）] [儲存]
+     [輸入框（obscureText）]
+     [儲存]  [測試]
 ```
+- **[測試] 按鈕：** 用目前輸入框內的 key 呼叫 Google Cloud TTS，播放固定測試文字 `"안녕하세요"`（語言 `ko-KR`）
+  - 播放成功 → Snackbar 顯示「✅ API key 正常」
+  - 失敗（403 / 400）→ Snackbar 顯示「❌ API key 無效，請確認後重試」
+  - 網路錯誤 → Snackbar 顯示「❌ 網路連線失敗」
+  - 測試期間按鈕顯示 loading 狀態（`CircularProgressIndicator`），避免重複點擊
 - 若 `apiKeyInvalid == true`，輸入框下方顯示紅色提示「API key 無效，目前使用裝置內建語音」
 
 ---
