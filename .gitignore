@@ -1,15 +1,55 @@
-# IntelliJ IDEA
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Android
+android/.gradle/
+android/captures/
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+
+# IntelliJ / Android Studio
 .idea/
 *.iml
 *.iws
 *.ipr
 out/
+.fleet/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+Thumbs.db
+
+# Non-target platforms
+ios/
+macos/
+linux/
+windows/
+web/
 
 # Gradle
 .gradle/
-build/
 gradle-app.setting
 !gradle-wrapper.jar
+
+# Build outputs
+*.apk
+*.aab
+*.ipa
+
+# Logs
+*.log
+hs_err_pid*
 
 # Maven
 target/
@@ -17,17 +57,8 @@ pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 
-# Kotlin / JVM
-*.class
-*.jar
-*.war
-*.ear
-*.log
-hs_err_pid*
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Superpowers brainstorm sessions
+# Superpowers
 .superpowers/
+
+# Flutter metadata
+.metadata
