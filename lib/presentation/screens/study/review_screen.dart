@@ -5,23 +5,57 @@ import '../../../core/l10n/app_localizations.dart';
 import '../../../domain/entities/deck.dart';
 import '../../providers/review_provider.dart';
 import '../../providers/locale_provider.dart';
+import '../../providers/tts_provider.dart';
 
 enum ReviewMode { flip, spacedRepetition }
 
-class ReviewScreen extends ConsumerWidget {
+class ReviewScreen extends ConsumerStatefulWidget {
   final Deck deck;
   final ReviewMode mode;
 
   const ReviewScreen({super.key, required this.deck, required this.mode});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ReviewScreen> createState() => _ReviewScreenState();
+}
+
+class _ReviewScreenState extends ConsumerState<ReviewScreen> {
+  String? _lastPlayedKey;
+
+  void _autoSpeak(String word, bool isFlipped) {
+    final tts = ref.read(ttsProvider);
+    if (!tts.autoPlay) return;
+    final key = '$word:$isFlipped';
+    if (_lastPlayedKey == key) return;
+    _lastPlayedKey = key;
+    ref.read(ttsProvider.notifier).speak(word, widget.deck.language);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    final sessionAsync = ref.watch(reviewNotifierProvider(deck.id));
+    final sessionAsync = ref.watch(reviewNotifierProvider(widget.deck.id));
     final locale = ref.watch(localeProvider);
 
+    ref.listen<TtsState>(ttsProvider, (prev, next) {
+      if (next.apiKeyInvalid && prev?.apiKeyInvalid != true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l.ttsApiKeyInvalidWarning)),
+        );
+      }
+    });
+
+    ref.listen(reviewNotifierProvider(widget.deck.id), (prev, next) {
+      next.whenData((session) {
+        if (session.isComplete) return;
+        final card = session.currentCard;
+        if (card == null) return;
+        _autoSpeak(card.korean, session.isFlipped);
+      });
+    });
+
     return Scaffold(
-      appBar: AppBar(title: Text(deck.name)),
+      appBar: AppBar(title: Text(widget.deck.name)),
       body: sessionAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
@@ -30,7 +64,7 @@ class ReviewScreen extends ConsumerWidget {
             return _SessionComplete(
               total: session.cards.length,
               correct: session.sessionCorrect,
-              deckId: deck.id,
+              deckId: widget.deck.id,
             );
           }
 
@@ -49,7 +83,7 @@ class ReviewScreen extends ConsumerWidget {
                   onTap: session.isFlipped
                       ? null
                       : () => ref
-                          .read(reviewNotifierProvider(deck.id).notifier)
+                          .read(reviewNotifierProvider(widget.deck.id).notifier)
                           .flip(),
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
@@ -61,11 +95,13 @@ class ReviewScreen extends ConsumerWidget {
                             meaning: meaning,
                             example: card.exampleSentence,
                             translation: card.exampleTranslation,
+                            languageCode: widget.deck.language,
                           )
                         : _CardFront(
                             key: const ValueKey('front'),
                             korean: card.korean,
                             hint: l.flipToReveal,
+                            languageCode: widget.deck.language,
                           ),
                   ),
                 ),
@@ -73,7 +109,7 @@ class ReviewScreen extends ConsumerWidget {
               if (session.isFlipped)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 32),
-                  child: _RatingButtons(mode: mode, deckId: deck.id),
+                  child: _RatingButtons(mode: widget.mode, deckId: widget.deck.id),
                 ),
             ],
           );
@@ -83,10 +119,47 @@ class ReviewScreen extends ConsumerWidget {
   }
 }
 
+class _SpeakButton extends ConsumerWidget {
+  final String word;
+  final String languageCode;
+
+  const _SpeakButton({required this.word, required this.languageCode});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
+    final tts = ref.watch(ttsProvider);
+    final isUnavailable = !tts.ttsSupported;
+
+    return IconButton(
+      icon: Icon(Icons.volume_up, color: isUnavailable ? Colors.grey : null),
+      onPressed: () {
+        if (isUnavailable) {
+          final msg = tts.apiKeyInvalid
+              ? l.ttsSpeakUnsupportedWithKey
+              : l.ttsSpeakUnsupportedNoKey;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(msg)),
+          );
+          return;
+        }
+        ref.read(ttsProvider.notifier).speak(word, languageCode);
+      },
+    );
+  }
+}
+
 class _CardFront extends StatelessWidget {
   final String korean;
   final String hint;
-  const _CardFront({super.key, required this.korean, required this.hint});
+  final String languageCode;
+
+  const _CardFront({
+    super.key,
+    required this.korean,
+    required this.hint,
+    required this.languageCode,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +175,8 @@ class _CardFront extends StatelessWidget {
               children: [
                 Text(korean,
                     style: Theme.of(context).textTheme.displayMedium),
-                const SizedBox(height: 24),
+                _SpeakButton(word: korean, languageCode: languageCode),
+                const SizedBox(height: 16),
                 Text(hint,
                     style: Theme.of(context)
                         .textTheme
@@ -123,6 +197,7 @@ class _CardBack extends StatelessWidget {
   final String meaning;
   final String example;
   final String translation;
+  final String languageCode;
 
   const _CardBack({
     super.key,
@@ -131,6 +206,7 @@ class _CardBack extends StatelessWidget {
     required this.meaning,
     required this.example,
     required this.translation,
+    required this.languageCode,
   });
 
   @override
@@ -146,6 +222,9 @@ class _CardBack extends StatelessWidget {
               Center(
                 child: Text(korean,
                     style: Theme.of(context).textTheme.displaySmall),
+              ),
+              Center(
+                child: _SpeakButton(word: korean, languageCode: languageCode),
               ),
               const SizedBox(height: 8),
               Center(
