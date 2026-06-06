@@ -10,6 +10,7 @@ Future<void> seedBuiltInData(AppDatabase db) async {
     description: const Value('基礎詞彙、問候語、數字'),
     level: const Value('beginner'),
     isBuiltIn: const Value(true),
+    language: const Value('ko-KR'),
     createdAt: Value(DateTime(2026)),
   ));
   await db.into(db.decks).insertOnConflictUpdate(DecksCompanion(
@@ -18,6 +19,7 @@ Future<void> seedBuiltInData(AppDatabase db) async {
     description: const Value('常用句型、旅遊、購物'),
     level: const Value('intermediate'),
     isBuiltIn: const Value(true),
+    language: const Value('ko-KR'),
     createdAt: Value(DateTime(2026)),
   ));
 

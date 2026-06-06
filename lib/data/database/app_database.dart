@@ -28,13 +28,21 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (m) async {
           await m.createAll();
           await seedBuiltInData(this);
+        },
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.addColumn(decks, decks.language);
+            // 現有內建牌組補 ko-KR
+            await (update(decks)..where((t) => t.isBuiltIn.equals(true)))
+                .write(const DecksCompanion(language: Value('ko-KR')));
+          }
         },
       );
 }

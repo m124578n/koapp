@@ -9,6 +9,8 @@ class Decks extends Table {
   TextColumn get level => text()(); // 'beginner' | 'intermediate' | 'all'
   BoolColumn get isBuiltIn =>
       boolean().withDefault(const Constant(false))();
+  TextColumn get language =>
+      text().withDefault(const Constant('ko-KR'))();
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime)();
 

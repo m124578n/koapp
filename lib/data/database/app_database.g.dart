@@ -62,6 +62,18 @@ class $DecksTable extends Decks with TableInfo<$DecksTable, DeckRow> {
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _languageMeta = const VerificationMeta(
+    'language',
+  );
+  @override
+  late final GeneratedColumn<String> language = GeneratedColumn<String>(
+    'language',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('ko-KR'),
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -81,6 +93,7 @@ class $DecksTable extends Decks with TableInfo<$DecksTable, DeckRow> {
     description,
     level,
     isBuiltIn,
+    language,
     createdAt,
   ];
   @override
@@ -131,6 +144,12 @@ class $DecksTable extends Decks with TableInfo<$DecksTable, DeckRow> {
         isBuiltIn.isAcceptableOrUnknown(data['is_built_in']!, _isBuiltInMeta),
       );
     }
+    if (data.containsKey('language')) {
+      context.handle(
+        _languageMeta,
+        language.isAcceptableOrUnknown(data['language']!, _languageMeta),
+      );
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -166,6 +185,10 @@ class $DecksTable extends Decks with TableInfo<$DecksTable, DeckRow> {
         DriftSqlType.bool,
         data['${effectivePrefix}is_built_in'],
       )!,
+      language: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language'],
+      )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -185,6 +208,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
   final String description;
   final String level;
   final bool isBuiltIn;
+  final String language;
   final DateTime createdAt;
   const DeckRow({
     required this.id,
@@ -192,6 +216,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
     required this.description,
     required this.level,
     required this.isBuiltIn,
+    required this.language,
     required this.createdAt,
   });
   @override
@@ -202,6 +227,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
     map['description'] = Variable<String>(description);
     map['level'] = Variable<String>(level);
     map['is_built_in'] = Variable<bool>(isBuiltIn);
+    map['language'] = Variable<String>(language);
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -213,6 +239,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
       description: Value(description),
       level: Value(level),
       isBuiltIn: Value(isBuiltIn),
+      language: Value(language),
       createdAt: Value(createdAt),
     );
   }
@@ -228,6 +255,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
       description: serializer.fromJson<String>(json['description']),
       level: serializer.fromJson<String>(json['level']),
       isBuiltIn: serializer.fromJson<bool>(json['isBuiltIn']),
+      language: serializer.fromJson<String>(json['language']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -240,6 +268,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
       'description': serializer.toJson<String>(description),
       'level': serializer.toJson<String>(level),
       'isBuiltIn': serializer.toJson<bool>(isBuiltIn),
+      'language': serializer.toJson<String>(language),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
@@ -250,6 +279,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
     String? description,
     String? level,
     bool? isBuiltIn,
+    String? language,
     DateTime? createdAt,
   }) => DeckRow(
     id: id ?? this.id,
@@ -257,6 +287,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
     description: description ?? this.description,
     level: level ?? this.level,
     isBuiltIn: isBuiltIn ?? this.isBuiltIn,
+    language: language ?? this.language,
     createdAt: createdAt ?? this.createdAt,
   );
   DeckRow copyWithCompanion(DecksCompanion data) {
@@ -268,6 +299,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
           : this.description,
       level: data.level.present ? data.level.value : this.level,
       isBuiltIn: data.isBuiltIn.present ? data.isBuiltIn.value : this.isBuiltIn,
+      language: data.language.present ? data.language.value : this.language,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -280,6 +312,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
           ..write('description: $description, ')
           ..write('level: $level, ')
           ..write('isBuiltIn: $isBuiltIn, ')
+          ..write('language: $language, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -287,7 +320,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
 
   @override
   int get hashCode =>
-      Object.hash(id, name, description, level, isBuiltIn, createdAt);
+      Object.hash(id, name, description, level, isBuiltIn, language, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -297,6 +330,7 @@ class DeckRow extends DataClass implements Insertable<DeckRow> {
           other.description == this.description &&
           other.level == this.level &&
           other.isBuiltIn == this.isBuiltIn &&
+          other.language == this.language &&
           other.createdAt == this.createdAt);
 }
 
@@ -306,6 +340,7 @@ class DecksCompanion extends UpdateCompanion<DeckRow> {
   final Value<String> description;
   final Value<String> level;
   final Value<bool> isBuiltIn;
+  final Value<String> language;
   final Value<DateTime> createdAt;
   final Value<int> rowid;
   const DecksCompanion({
@@ -314,6 +349,7 @@ class DecksCompanion extends UpdateCompanion<DeckRow> {
     this.description = const Value.absent(),
     this.level = const Value.absent(),
     this.isBuiltIn = const Value.absent(),
+    this.language = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -323,6 +359,7 @@ class DecksCompanion extends UpdateCompanion<DeckRow> {
     this.description = const Value.absent(),
     required String level,
     this.isBuiltIn = const Value.absent(),
+    this.language = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
@@ -334,6 +371,7 @@ class DecksCompanion extends UpdateCompanion<DeckRow> {
     Expression<String>? description,
     Expression<String>? level,
     Expression<bool>? isBuiltIn,
+    Expression<String>? language,
     Expression<DateTime>? createdAt,
     Expression<int>? rowid,
   }) {
@@ -343,6 +381,7 @@ class DecksCompanion extends UpdateCompanion<DeckRow> {
       if (description != null) 'description': description,
       if (level != null) 'level': level,
       if (isBuiltIn != null) 'is_built_in': isBuiltIn,
+      if (language != null) 'language': language,
       if (createdAt != null) 'created_at': createdAt,
       if (rowid != null) 'rowid': rowid,
     });
@@ -354,6 +393,7 @@ class DecksCompanion extends UpdateCompanion<DeckRow> {
     Value<String>? description,
     Value<String>? level,
     Value<bool>? isBuiltIn,
+    Value<String>? language,
     Value<DateTime>? createdAt,
     Value<int>? rowid,
   }) {
@@ -363,6 +403,7 @@ class DecksCompanion extends UpdateCompanion<DeckRow> {
       description: description ?? this.description,
       level: level ?? this.level,
       isBuiltIn: isBuiltIn ?? this.isBuiltIn,
+      language: language ?? this.language,
       createdAt: createdAt ?? this.createdAt,
       rowid: rowid ?? this.rowid,
     );
@@ -386,6 +427,9 @@ class DecksCompanion extends UpdateCompanion<DeckRow> {
     if (isBuiltIn.present) {
       map['is_built_in'] = Variable<bool>(isBuiltIn.value);
     }
+    if (language.present) {
+      map['language'] = Variable<String>(language.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -403,6 +447,7 @@ class DecksCompanion extends UpdateCompanion<DeckRow> {
           ..write('description: $description, ')
           ..write('level: $level, ')
           ..write('isBuiltIn: $isBuiltIn, ')
+          ..write('language: $language, ')
           ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -2620,6 +2665,7 @@ typedef $$DecksTableCreateCompanionBuilder =
       Value<String> description,
       required String level,
       Value<bool> isBuiltIn,
+      Value<String> language,
       Value<DateTime> createdAt,
       Value<int> rowid,
     });
@@ -2630,6 +2676,7 @@ typedef $$DecksTableUpdateCompanionBuilder =
       Value<String> description,
       Value<String> level,
       Value<bool> isBuiltIn,
+      Value<String> language,
       Value<DateTime> createdAt,
       Value<int> rowid,
     });
@@ -2688,6 +2735,11 @@ class $$DecksTableFilterComposer extends Composer<_$AppDatabase, $DecksTable> {
 
   ColumnFilters<bool> get isBuiltIn => $composableBuilder(
     column: $table.isBuiltIn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get language => $composableBuilder(
+    column: $table.language,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2756,6 +2808,11 @@ class $$DecksTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get language => $composableBuilder(
+    column: $table.language,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -2787,6 +2844,9 @@ class $$DecksTableAnnotationComposer
 
   GeneratedColumn<bool> get isBuiltIn =>
       $composableBuilder(column: $table.isBuiltIn, builder: (column) => column);
+
+  GeneratedColumn<String> get language =>
+      $composableBuilder(column: $table.language, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -2850,6 +2910,7 @@ class $$DecksTableTableManager
                 Value<String> description = const Value.absent(),
                 Value<String> level = const Value.absent(),
                 Value<bool> isBuiltIn = const Value.absent(),
+                Value<String> language = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => DecksCompanion(
@@ -2858,6 +2919,7 @@ class $$DecksTableTableManager
                 description: description,
                 level: level,
                 isBuiltIn: isBuiltIn,
+                language: language,
                 createdAt: createdAt,
                 rowid: rowid,
               ),
@@ -2868,6 +2930,7 @@ class $$DecksTableTableManager
                 Value<String> description = const Value.absent(),
                 required String level,
                 Value<bool> isBuiltIn = const Value.absent(),
+                Value<String> language = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => DecksCompanion.insert(
@@ -2876,6 +2939,7 @@ class $$DecksTableTableManager
                 description: description,
                 level: level,
                 isBuiltIn: isBuiltIn,
+                language: language,
                 createdAt: createdAt,
                 rowid: rowid,
               ),
