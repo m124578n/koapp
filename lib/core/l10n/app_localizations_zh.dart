@@ -173,4 +173,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get achievementDeckDesc => '建立第一個自訂牌組';
+
+  @override
+  String get nextCard => '下一張';
 }

@@ -55,5 +55,6 @@
   "achievementPerfectTitle": "Perfectionist",
   "achievementPerfectDesc": "100% accuracy in one session",
   "achievementDeckTitle": "Deck Creator",
-  "achievementDeckDesc": "Create your first custom deck"
+  "achievementDeckDesc": "Create your first custom deck",
+  "nextCard": "Next →"
 }

@@ -185,7 +185,6 @@ class _RatingButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
-    final notifier = ref.read(reviewNotifierProvider(deckId).notifier);
 
     if (mode == ReviewMode.flip) {
       return Padding(
@@ -193,8 +192,8 @@ class _RatingButtons extends ConsumerWidget {
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: notifier.nextFlipCard,
-            child: const Text('Next →'),
+            onPressed: () => ref.read(reviewNotifierProvider(deckId).notifier).nextFlipCard(),
+            child: Text(l.nextCard),
           ),
         ),
       );
@@ -204,10 +203,10 @@ class _RatingButtons extends ConsumerWidget {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          _ratingBtn(context, l.btnDontKnow, 0, Colors.red, notifier),
-          _ratingBtn(context, l.btnHard, 1, Colors.orange, notifier),
-          _ratingBtn(context, l.btnGood, 2, Colors.blue, notifier),
-          _ratingBtn(context, l.btnEasy, 3, Colors.green, notifier),
+          _ratingBtn(context, ref, l.btnDontKnow, 0, Colors.red),
+          _ratingBtn(context, ref, l.btnHard, 1, Colors.orange),
+          _ratingBtn(context, ref, l.btnGood, 2, Colors.blue),
+          _ratingBtn(context, ref, l.btnEasy, 3, Colors.green),
         ],
       ),
     );
@@ -215,17 +214,17 @@ class _RatingButtons extends ConsumerWidget {
 
   Widget _ratingBtn(
     BuildContext context,
+    WidgetRef ref,
     String label,
     int rating,
     Color color,
-    ReviewNotifier notifier,
   ) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: color),
-          onPressed: () => notifier.rateCard(rating),
+          onPressed: () => ref.read(reviewNotifierProvider(deckId).notifier).rateCard(rating),
           child: Text(label, style: const TextStyle(fontSize: 12)),
         ),
       ),

@@ -421,6 +421,12 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'建立第一個自訂牌組'**
   String get achievementDeckDesc;
+
+  /// No description provided for @nextCard.
+  ///
+  /// In zh, this message translates to:
+  /// **'下一張'**
+  String get nextCard;
 }
 
 class _AppLocalizationsDelegate

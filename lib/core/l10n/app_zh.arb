@@ -55,5 +55,6 @@
   "achievementPerfectTitle": "完美主義者",
   "achievementPerfectDesc": "單次複習答對率 100%",
   "achievementDeckTitle": "詞庫創作者",
-  "achievementDeckDesc": "建立第一個自訂牌組"
+  "achievementDeckDesc": "建立第一個自訂牌組",
+  "nextCard": "下一張"
 }

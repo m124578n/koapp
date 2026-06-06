@@ -173,4 +173,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get achievementDeckDesc => 'Create your first custom deck';
+
+  @override
+  String get nextCard => 'Next →';
 }
