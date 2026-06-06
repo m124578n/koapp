@@ -71,7 +71,10 @@ class ReviewScreen extends ConsumerWidget {
                 ),
               ),
               if (session.isFlipped)
-                _RatingButtons(mode: mode, deckId: deck.id),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 32),
+                  child: _RatingButtons(mode: mode, deckId: deck.id),
+                ),
             ],
           );
         },

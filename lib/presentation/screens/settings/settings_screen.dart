@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../providers/locale_provider.dart';
 import '../../../core/l10n/app_localizations.dart';
 
@@ -74,10 +75,42 @@ class SettingsScreen extends ConsumerWidget {
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: Text(l.about),
-            onTap: () => showAboutDialog(
+            onTap: () => showDialog(
               context: context,
-              applicationName: l.appTitle,
-              applicationVersion: '1.0.0',
+              builder: (ctx) => AlertDialog(
+                title: Text(l.appTitle),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Version 1.0.0',
+                        style: Theme.of(ctx).textTheme.bodyMedium),
+                    const SizedBox(height: 12),
+                    const Text('Written by Claude Code',
+                        style: TextStyle(color: Colors.grey)),
+                    const SizedBox(height: 8),
+                    GestureDetector(
+                      onTap: () => launchUrl(
+                        Uri.parse('https://github.com/m124578n/koapp'),
+                        mode: LaunchMode.externalApplication,
+                      ),
+                      child: const Text(
+                        'github.com/m124578n/koapp',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(ctx).pop(),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
