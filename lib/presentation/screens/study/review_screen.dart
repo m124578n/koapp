@@ -249,10 +249,14 @@ class _SessionComplete extends ConsumerStatefulWidget {
 }
 
 class _SessionCompleteState extends ConsumerState<_SessionComplete> {
+  bool _finalized = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_finalized || !mounted) return;
+      _finalized = true;
       ref
           .read(reviewNotifierProvider(widget.deckId).notifier)
           .finalizeSession();

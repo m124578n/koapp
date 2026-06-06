@@ -121,7 +121,7 @@ class ReviewNotifier extends StateNotifier<AsyncValue<ReviewSession>> {
     final isNewDay = stats.lastStudiedAt == null ||
         !_sameDay(stats.lastStudiedAt!, today);
     final wasMissed = stats.lastStudiedAt != null &&
-        today.difference(stats.lastStudiedAt!).inDays > 1;
+        _calendarDaysBetween(stats.lastStudiedAt!, today) > 1;
 
     if (isNewDay) {
       final newStreak = wasMissed ? 1 : stats.currentStreak + 1;
@@ -157,6 +157,12 @@ class ReviewNotifier extends StateNotifier<AsyncValue<ReviewSession>> {
         await statsRepo.unlockAchievement(a.id);
       }
     }
+  }
+
+  int _calendarDaysBetween(DateTime a, DateTime b) {
+    final aDate = DateTime(a.year, a.month, a.day);
+    final bDate = DateTime(b.year, b.month, b.day);
+    return bDate.difference(aDate).inDays;
   }
 
   bool _sameDay(DateTime a, DateTime b) =>
