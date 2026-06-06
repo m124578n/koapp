@@ -56,5 +56,7 @@
   "achievementPerfectDesc": "單次複習答對率 100%",
   "achievementDeckTitle": "詞庫創作者",
   "achievementDeckDesc": "建立第一個自訂牌組",
-  "nextCard": "下一張"
+  "nextCard": "下一張",
+  "deckName": "牌組名稱",
+  "meaningRequired": "請輸入至少一個意思"
 }

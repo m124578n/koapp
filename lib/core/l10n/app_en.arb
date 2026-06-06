@@ -56,5 +56,7 @@
   "achievementPerfectDesc": "100% accuracy in one session",
   "achievementDeckTitle": "Deck Creator",
   "achievementDeckDesc": "Create your first custom deck",
-  "nextCard": "Next →"
+  "nextCard": "Next →",
+  "deckName": "Deck Name",
+  "meaningRequired": "Please enter at least one meaning"
 }

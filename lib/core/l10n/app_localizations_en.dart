@@ -176,4 +176,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nextCard => 'Next →';
+
+  @override
+  String get deckName => 'Deck Name';
+
+  @override
+  String get meaningRequired => 'Please enter at least one meaning';
 }

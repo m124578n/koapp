@@ -176,4 +176,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nextCard => '下一張';
+
+  @override
+  String get deckName => '牌組名稱';
+
+  @override
+  String get meaningRequired => '請輸入至少一個意思';
 }

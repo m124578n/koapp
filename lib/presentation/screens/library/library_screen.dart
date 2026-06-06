@@ -46,18 +46,21 @@ class LibraryScreen extends ConsumerWidget {
   void _showNewDeckDialog(BuildContext context, WidgetRef ref) {
     final controller = TextEditingController();
     final l = AppLocalizations.of(context)!;
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l.newDeck),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(labelText: 'Name'),
+          decoration: InputDecoration(labelText: l.deckName),
           autofocus: true,
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(ctx),
+            onPressed: () {
+              controller.dispose();
+              Navigator.pop(ctx);
+            },
             child: Text(l.cancel),
           ),
           ElevatedButton(
@@ -73,6 +76,7 @@ class LibraryScreen extends ConsumerWidget {
                 createdAt: DateTime.now(),
               ));
               ref.invalidate(allDecksProvider);
+              controller.dispose();
               if (ctx.mounted) Navigator.pop(ctx);
             },
             child: Text(l.save),

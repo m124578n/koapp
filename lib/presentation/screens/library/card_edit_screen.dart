@@ -94,8 +94,9 @@ class _CardEditScreenState extends ConsumerState<CardEditScreen> {
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     if (_zhCtrl.text.trim().isEmpty && _enCtrl.text.trim().isEmpty) {
+      final l = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter at least one meaning')),
+        SnackBar(content: Text(l.meaningRequired)),
       );
       return;
     }

@@ -427,6 +427,18 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'下一張'**
   String get nextCard;
+
+  /// No description provided for @deckName.
+  ///
+  /// In zh, this message translates to:
+  /// **'牌組名稱'**
+  String get deckName;
+
+  /// No description provided for @meaningRequired.
+  ///
+  /// In zh, this message translates to:
+  /// **'請輸入至少一個意思'**
+  String get meaningRequired;
 }
 
 class _AppLocalizationsDelegate
