@@ -20,7 +20,7 @@ bool get isSupported; // 目前語言是否可用
 ```
 
 **內部邏輯（優先順序）：**
-1. 若 `apiKey` 不為空 → 呼叫 Google Cloud TTS REST API，拿回 base64 MP3，用 `just_audio` 播放
+1. 若 `apiKey` 不為空 → 呼叫 Google Cloud TTS REST API，拿回 base64 MP3，用 `audioplayers` 從記憶體播放
 2. 若 `apiKey` 為空 → 呼叫 `flutter_tts`
 3. 若 `flutter_tts` 回報語言不支援 → 設 `isSupported = false`
 
@@ -35,7 +35,7 @@ bool get isSupported; // 目前語言是否可用
   }
   ```
 - Response：`{ "audioContent": "<base64 MP3>" }`
-- 解碼 base64 → 寫入暫存檔 → `just_audio` 從檔案路徑播放
+- 解碼 base64 → `Uint8List` bytes → `audioplayers` 的 `playBytes()` 直接播放，不寫入任何檔案
 
 **錯誤處理：**
 - HTTP 403 / 400（key 錯誤）→ 降級至 `flutter_tts` 並在 provider 標記 `apiKeyInvalid = true`
@@ -144,7 +144,7 @@ final String language; // BCP-47，例如 'ko-KR'、'ja-JP'
 
 ```yaml
 flutter_tts: ^4.2.0
-just_audio: ^0.9.40
+audioplayers: ^6.1.0
 http: ^1.2.0
 ```
 
