@@ -54,12 +54,14 @@ class ReviewNotifier extends StateNotifier<AsyncValue<ReviewSession>> {
   Future<void> _load() async {
     final cards =
         await _ref.read(cardRepositoryProvider).getCardsByDeck(deckId);
-    state = AsyncValue.data(ReviewSession(
-      cards: cards,
-      currentIndex: 0,
-      isFlipped: false,
-      sessionCorrect: 0,
-    ));
+    if (mounted) {
+      state = AsyncValue.data(ReviewSession(
+        cards: cards,
+        currentIndex: 0,
+        isFlipped: false,
+        sessionCorrect: 0,
+      ));
+    }
   }
 
   void flip() {

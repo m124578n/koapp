@@ -15,7 +15,7 @@ class DailyGoalNotifier extends StateNotifier<int> {
   }
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
-    state = prefs.getInt(_key) ?? 10;
+    if (mounted) state = prefs.getInt(_key) ?? 10;
   }
   Future<void> setGoal(int goal) async {
     state = goal;
