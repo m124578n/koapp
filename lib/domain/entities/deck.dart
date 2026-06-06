@@ -7,6 +7,7 @@ class Deck {
   final String description;
   final DeckLevel level;
   final bool isBuiltIn;
+  final String language;
   final DateTime createdAt;
 
   const Deck({
@@ -15,6 +16,7 @@ class Deck {
     required this.description,
     required this.level,
     required this.isBuiltIn,
+    required this.language,
     required this.createdAt,
   });
 }

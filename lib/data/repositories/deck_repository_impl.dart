@@ -31,6 +31,7 @@ class DeckRepositoryImpl implements DeckRepository {
       description: Value(deck.description),
       level: Value(_levelToString(deck.level)),
       isBuiltIn: Value(deck.isBuiltIn),
+      language: Value(deck.language),
       createdAt: Value(deck.createdAt),
     ));
   }
@@ -45,6 +46,7 @@ class DeckRepositoryImpl implements DeckRepository {
         description: row.description,
         level: _levelFromString(row.level),
         isBuiltIn: row.isBuiltIn,
+        language: row.language,
         createdAt: row.createdAt,
       );
 
