@@ -72,7 +72,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get editCard => '編輯卡片';
 
   @override
-  String get korean => '韓文';
+  String get word => '單字';
 
   @override
   String get romanization => '羅馬拼音';

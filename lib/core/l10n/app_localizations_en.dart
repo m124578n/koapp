@@ -72,7 +72,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editCard => 'Edit Card';
 
   @override
-  String get korean => 'Korean';
+  String get word => 'Word';
 
   @override
   String get romanization => 'Romanization';

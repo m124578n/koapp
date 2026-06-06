@@ -57,7 +57,7 @@ class _CardEditScreenState extends ConsumerState<CardEditScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            _field(_koreanCtrl, l.korean, required: true),
+            _field(_koreanCtrl, l.word, required: true),
             _field(_romanCtrl, l.romanization),
             _field(_zhCtrl, l.meaningZh),
             _field(_enCtrl, l.meaningEn),

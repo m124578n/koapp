@@ -224,11 +224,11 @@ abstract class AppLocalizations {
   /// **'編輯卡片'**
   String get editCard;
 
-  /// No description provided for @korean.
+  /// No description provided for @word.
   ///
   /// In zh, this message translates to:
-  /// **'韓文'**
-  String get korean;
+  /// **'單字'**
+  String get word;
 
   /// No description provided for @romanization.
   ///
