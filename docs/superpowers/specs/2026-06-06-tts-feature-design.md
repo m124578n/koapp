@@ -91,7 +91,7 @@ final String language; // BCP-47，例如 'ko-KR'、'ja-JP'
 | 韓文 | `ko-KR` |
 | 日文 | `ja-JP` |
 | 英文 | `en-US` |
-| 中文（普通話）| `zh-CN` |
+| 中文（台灣）| `cmn-TW` |
 | 法文 | `fr-FR` |
 | 西班牙文 | `es-ES` |
 | 德文 | `de-DE` |
