@@ -158,8 +158,11 @@ class _AchievementBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final unlocked = achievement.unlocked;
+    final l = AppLocalizations.of(context)!;
+    final title = _resolveTitle(l, achievement.titleKey);
+    final desc = _resolveDesc(l, achievement.descKey);
     return Tooltip(
-      message: achievement.descKey,
+      message: desc,
       child: Container(
         width: 80,
         padding: const EdgeInsets.all(12),
@@ -180,7 +183,7 @@ class _AchievementBadge extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              achievement.titleKey,
+              title,
               style: Theme.of(context).textTheme.labelSmall,
               textAlign: TextAlign.center,
             ),
@@ -188,6 +191,28 @@ class _AchievementBadge extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _resolveTitle(AppLocalizations l, String key) {
+    switch (key) {
+      case 'achievementFirstTitle': return l.achievementFirstTitle;
+      case 'achievementStreak7Title': return l.achievementStreak7Title;
+      case 'achievementTotal500Title': return l.achievementTotal500Title;
+      case 'achievementPerfectTitle': return l.achievementPerfectTitle;
+      case 'achievementDeckTitle': return l.achievementDeckTitle;
+      default: return key;
+    }
+  }
+
+  String _resolveDesc(AppLocalizations l, String key) {
+    switch (key) {
+      case 'achievementFirstDesc': return l.achievementFirstDesc;
+      case 'achievementStreak7Desc': return l.achievementStreak7Desc;
+      case 'achievementTotal500Desc': return l.achievementTotal500Desc;
+      case 'achievementPerfectDesc': return l.achievementPerfectDesc;
+      case 'achievementDeckDesc': return l.achievementDeckDesc;
+      default: return key;
+    }
   }
 
   IconData _iconFromName(String name) {
