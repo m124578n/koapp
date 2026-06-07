@@ -193,7 +193,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ttsApiKeyLabel => 'Google TTS API Key';
 
   @override
-  String get ttsApiKeyHint => 'Enter API Key to use Google Cloud TTS (optional)';
+  String get ttsApiKeyHint =>
+      'Enter API Key to use Google Cloud TTS (optional)';
 
   @override
   String get ttsTest => 'Test';
@@ -208,11 +209,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ttsTestNetworkError => 'Network error, please try again later';
 
   @override
-  String get ttsApiKeyInvalidWarning => 'API Key failed, switched to system TTS';
+  String get ttsApiKeyInvalidWarning =>
+      'API Key failed, switched to system TTS';
 
   @override
-  String get ttsSpeakUnsupportedWithKey => 'Pronunciation not supported for this language (try Google TTS API Key)';
+  String get ttsSpeakUnsupportedWithKey =>
+      'Pronunciation not supported for this language (try Google TTS API Key)';
 
   @override
-  String get ttsSpeakUnsupportedNoKey => 'System TTS not supported for this language';
+  String get ttsSpeakUnsupportedNoKey =>
+      'System TTS not supported for this language';
 }

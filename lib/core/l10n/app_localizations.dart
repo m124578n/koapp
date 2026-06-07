@@ -441,36 +441,69 @@ abstract class AppLocalizations {
   String get meaningRequired;
 
   /// No description provided for @deckLanguage.
+  ///
+  /// In zh, this message translates to:
+  /// **'牌組語言'**
   String get deckLanguage;
 
   /// No description provided for @ttsAutoPlay.
+  ///
+  /// In zh, this message translates to:
+  /// **'自動播放讀音'**
   String get ttsAutoPlay;
 
   /// No description provided for @ttsApiKeyLabel.
+  ///
+  /// In zh, this message translates to:
+  /// **'Google TTS API Key'**
   String get ttsApiKeyLabel;
 
   /// No description provided for @ttsApiKeyHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'輸入 API Key 以使用 Google 雲端語音（選填）'**
   String get ttsApiKeyHint;
 
   /// No description provided for @ttsTest.
+  ///
+  /// In zh, this message translates to:
+  /// **'測試'**
   String get ttsTest;
 
   /// No description provided for @ttsTestSuccess.
+  ///
+  /// In zh, this message translates to:
+  /// **'測試成功！正在播放語音'**
   String get ttsTestSuccess;
 
   /// No description provided for @ttsTestInvalidKey.
+  ///
+  /// In zh, this message translates to:
+  /// **'API Key 無效，請確認後重試'**
   String get ttsTestInvalidKey;
 
   /// No description provided for @ttsTestNetworkError.
+  ///
+  /// In zh, this message translates to:
+  /// **'網路錯誤，請稍後再試'**
   String get ttsTestNetworkError;
 
   /// No description provided for @ttsApiKeyInvalidWarning.
+  ///
+  /// In zh, this message translates to:
+  /// **'API Key 已失效，已切換至系統語音'**
   String get ttsApiKeyInvalidWarning;
 
   /// No description provided for @ttsSpeakUnsupportedWithKey.
+  ///
+  /// In zh, this message translates to:
+  /// **'此語言不支援讀音（請試試 Google TTS API Key）'**
   String get ttsSpeakUnsupportedWithKey;
 
   /// No description provided for @ttsSpeakUnsupportedNoKey.
+  ///
+  /// In zh, this message translates to:
+  /// **'此語言不支援系統語音'**
   String get ttsSpeakUnsupportedNoKey;
 }
 
